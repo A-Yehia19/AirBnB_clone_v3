@@ -155,7 +155,6 @@ No known bugs at this time.
 
 ## Authors
 Abdullah Yehia - [Github](https://github.com/A-Yehia19)
-
 Mohamed El Nagar - [Github](https://github.com/mabakry)
 
 Third part of Airbnb
