@@ -2,7 +2,8 @@
 """amniety module"""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from models import storage, CNC
+from models import storage
+from models.amenity import Amenity
 from flasgger.utils import swag_from
 
 
@@ -23,7 +24,6 @@ def amenities_no_id(amenity_id=None):
         if request_json.get('name') is None:
             abort(400, 'Missing name')
 
-        Amenity = CNC.get('Amenity')
         new_amenity = Amenity(**request_json)
         new_amenity.save()
         return (jsonify(new_amenity.to_json()), 201)

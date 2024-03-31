@@ -3,7 +3,8 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from flasgger.utils import swag_from
-from models import storage, CNC
+from models import storage
+from models.place import Place
 from os import environ
 STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
@@ -38,7 +39,6 @@ def places_per_city(city_id=None):
         if request_json.get("name") is None:
             abort(400, 'Missing name')
 
-        Place = CNC.get("Place")
         request_json['city_id'] = city_id
         new_object = Place(**request_json)
         new_object.save()

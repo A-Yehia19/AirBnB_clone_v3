@@ -2,7 +2,8 @@
 """cities module"""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from models import storage, CNC
+from models import storage
+from models.city import City
 from flasgger.utils import swag_from
 
 
@@ -28,7 +29,6 @@ def cities_per_state(state_id=None):
         if request_json.get("name") is None:
             abort(400, 'Missing name')
 
-        City = CNC.get("City")
         request_json['state_id'] = state_id
         new_object = City(**request_json)
         new_object.save()

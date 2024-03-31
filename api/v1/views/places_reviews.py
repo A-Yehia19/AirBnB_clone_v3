@@ -3,7 +3,8 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from flasgger.utils import swag_from
-from models import storage, CNC
+from models import storage
+from models.review import Review
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
@@ -40,7 +41,6 @@ def reviews_per_place(place_id=None):
         if req_json.get('text') is None:
             abort(400, 'Missing text')
 
-        Review = CNC.get("Review")
         req_json['place_id'] = place_id
         new_object = Review(**req_json)
         new_object.save()

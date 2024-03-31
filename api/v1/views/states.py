@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """states module"""
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, request
 from flasgger import swag_from
-from models import storage, CNC
+from models.state import State
+from models import storage
 
 
 @app_views.route('/states', methods=['GET', 'POST'])
@@ -16,15 +17,14 @@ def states_no_id():
         return (jsonify(all_states))
 
     if request.method == 'POST':
-        req_json = request.get_json()
-        if req_json is None:
+        request_json = request.get_json()
+        if request_json is None:
             abort(400, 'Not a JSON')
 
-        if req_json.get("name") is None:
+        if request_json.get("name") is None:
             abort(400, 'Missing name')
 
-        State = CNC.get("State")
-        new_object = State(**req_json)
+        new_object = State(**request_json)
         new_object.save()
         return (jsonify(new_object.to_json()), 201)
 
@@ -46,8 +46,8 @@ def states_with_id(state_id=None):
         return (jsonify({}))
 
     if request.method == 'PUT':
-        req_json = request.get_json()
-        if req_json is None:
+        request_json = request.get_json()
+        if request_json is None:
             abort(400, 'Not a JSON')
-        state_obj.bm_update(req_json)
+        state_obj.bm_update(request_json)
         return (jsonify(state_obj.to_json()))
